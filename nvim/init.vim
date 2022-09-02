@@ -49,7 +49,6 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 
-
 " === Gp / Rust support ===
 
 Plug 'folke/trouble.nvim'
@@ -71,6 +70,9 @@ Plug 'weilbith/nvim-code-action-menu'
 Plug 'williamboman/nvim-lsp-installer'
 
 " === Gp / Rust support ===
+
+" Git support
+Plug 'lewis6991/gitsigns.nvim'
 
 call plug#end()
 
@@ -511,5 +513,10 @@ require('nvim-treesitter.configs').setup {
   }
 }
 require('hlargs').setup()
+EOF
+
+" Git support
+lua <<EOF
+require('gitsigns').setup()
 EOF
 
