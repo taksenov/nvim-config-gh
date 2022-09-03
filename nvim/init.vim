@@ -34,18 +34,11 @@ Plug 'ryanoasis/vim-devicons'
 
 " Go
 Plug 'folke/trouble.nvim'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'j-hui/fidget.nvim'
 Plug 'kosayoda/nvim-lightbulb'
 Plug 'm-demare/hlargs.nvim'
 Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/vim-vsnip'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'weilbith/nvim-code-action-menu'
 Plug 'williamboman/nvim-lsp-installer'
@@ -114,7 +107,7 @@ lua require("trouble").setup()
 "
 lua <<EOF
 require('lspconfig').gopls.setup{
-	cmd = {'gopls'},
+  cmd = {'gopls'},
   settings = {
     gopls = {
       analyses = {
@@ -172,71 +165,6 @@ lua <<EOF
   end
 EOF
 autocmd BufWritePre *.go lua OrgImports(1000)
-
-" Configure LSP code navigation shortcuts
-" as found in :help lsp
-"
-nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <c-k>     <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> K         <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gi        <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gc        <cmd>lua vim.lsp.buf.incoming_calls()<CR>
-nnoremap <silent> gd        <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr        <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gn        <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <silent> gs        <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gw        <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-
-" Replaced LSP implementation with code action plugin...
-"
-" nnoremap <silent> ga        <cmd>lua vim.lsp.buf.code_action()<CR>
-"
-nnoremap <silent> ga        <cmd>CodeActionMenu<CR>
-
-nnoremap <silent> [x        <cmd>lua vim.diagnostic.goto_prev()<CR>
-nnoremap <silent> ]x        <cmd>lua vim.diagnostic.goto_next()<CR>
-nnoremap <silent> ]s        <cmd>lua vim.diagnostic.show()<CR>
-
-" Replaced LSP implementation with trouble plugin...
-"
-" nnoremap <silent> <space>q  <cmd>lua vim.diagnostic.setloclist()<CR>
-"
-nnoremap <silent> <space>q  <cmd>Trouble<CR>
-
-" Setup Completion
-" https://github.com/hrsh7th/nvim-cmp#recommended-configuration
-"
-lua <<EOF
-local cmp = require('cmp')
-cmp.setup({
-  snippet = {
-    expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-    ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    })
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'path' },
-    { name = 'vsnip' },
-    { name = 'buffer' },
-    { name = 'nvim_lsp_signature_help' },
-  },
-})
-EOF
 
 " Setup Treesitter and friends
 "
